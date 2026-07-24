@@ -3,443 +3,599 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Madame Oracle's Fortune Machine</title>
+<title>Reel of Fortune</title>
 <style>
+  @font-face {
+    font-family: "Bebas Neue";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(data:font/woff2;base64,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) format("woff2");
+  }
+
   :root {
-    --surface: #170809;
-    --surface-2: #260d10;
-    --machine: #3a1015;
-    --machine-2: #2a0b0f;
-    --trim: #d4a24c;
-    --trim-bright: #f1c976;
-    --ticket: #f4ead0;
-    --ticket-ink: #2b1d12;
-    --ticket-ink-soft: #6b5636;
-    --bulb: #e3a13d;
-    --text-primary: #f4ead0;
-    --text-muted: #b9925c;
-    --shadow: rgba(0, 0, 0, 0.55);
-  }
-
-  :root[data-theme="light"] {
-    --surface: #f3e7c9;
-    --surface-2: #ecdcb4;
-    --machine: #6b1220;
-    --machine-2: #560f1a;
-    --trim: #b9862f;
-    --trim-bright: #dcae52;
-    --ticket: #fbf5e4;
-    --ticket-ink: #2b1d12;
-    --ticket-ink-soft: #6b5636;
-    --bulb: #e8b354;
-    --text-primary: #3a1015;
-    --text-muted: #7a5a34;
-    --shadow: rgba(60, 30, 10, 0.25);
-  }
-
-  @media (prefers-color-scheme: light) {
-    :root:not([data-theme="dark"]) {
-      --surface: #f3e7c9;
-      --surface-2: #ecdcb4;
-      --machine: #6b1220;
-      --machine-2: #560f1a;
-      --trim: #b9862f;
-      --trim-bright: #dcae52;
-      --ticket: #fbf5e4;
-      --ticket-ink: #2b1d12;
-      --ticket-ink-soft: #6b5636;
-      --bulb: #e8b354;
-      --text-primary: #3a1015;
-      --text-muted: #7a5a34;
-      --shadow: rgba(60, 30, 10, 0.25);
-    }
+    --bg: #060606;
+    --fg: #f3f1ec;
+    --muted: rgba(243, 241, 236, 0.5);
+    --hairline: rgba(243, 241, 236, 0.14);
   }
 
   * { box-sizing: border-box; }
 
-  body {
+  html, body {
     margin: 0;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 3rem 1.25rem;
-    background:
-      radial-gradient(ellipse at 50% -10%, var(--surface-2), transparent 60%),
-      var(--surface);
-    color: var(--text-primary);
-    font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
-    transition: background 0.3s ease, color 0.3s ease;
+    height: 100%;
+    background: var(--bg);
+    overflow: hidden;
   }
 
-  .stage {
+  body {
+    color: var(--fg);
+    font-family: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  canvas#scene {
+    position: fixed;
+    inset: 0;
     width: 100%;
-    max-width: 420px;
+    height: 100%;
+    display: block;
+  }
+
+  .vignette {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at 50% 50%, transparent 38%, rgba(0,0,0,0.55) 78%, rgba(0,0,0,0.85) 100%);
+    z-index: 5;
+  }
+
+  .grain {
+    position: fixed;
+    inset: -50px;
+    pointer-events: none;
+    z-index: 6;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image:
+      radial-gradient(circle, #fff 0.6px, transparent 0.6px);
+    background-size: 3px 3px;
+    animation: grain-shift 0.4s steps(4) infinite;
+  }
+
+  @keyframes grain-shift {
+    0%   { transform: translate(0, 0); }
+    25%  { transform: translate(-1.5px, 1px); }
+    50%  { transform: translate(1px, -1.5px); }
+    75%  { transform: translate(-1px, -1px); }
+    100% { transform: translate(1.5px, 1.5px); }
+  }
+
+  .scanlines {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 7;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.035) 0px,
+      rgba(255,255,255,0.035) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    mix-blend-mode: overlay;
+  }
+
+  .flicker {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 8;
+    background: #fff;
+    opacity: 0;
+    animation: flicker 6s ease-in-out infinite;
+  }
+
+  @keyframes flicker {
+    0%, 96%, 100% { opacity: 0; }
+    97% { opacity: 0.02; }
+    98% { opacity: 0; }
+    98.5% { opacity: 0.015; }
+  }
+
+  .flash {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 20;
+    background: #fff;
+    opacity: 0;
+  }
+
+  .flash.pulse {
+    animation: flash-pulse 0.38s ease-out;
+  }
+
+  @keyframes flash-pulse {
+    0% { opacity: 0.85; }
+    100% { opacity: 0; }
+  }
+
+  .hud {
+    position: fixed;
+    top: 1.4rem;
+    left: 1.6rem;
+    z-index: 10;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .hud .rec-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #c94b3f;
+    box-shadow: 0 0 6px 1px rgba(201, 75, 63, 0.8);
+    animation: rec-blink 1.6s ease-in-out infinite;
+  }
+
+  @keyframes rec-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.25; }
+  }
+
+  .index {
+    position: fixed;
+    top: 1.4rem;
+    right: 1.6rem;
+    z-index: 10;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+
+  .stage-btn {
+    position: fixed;
+    inset: 0;
+    z-index: 15;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    color: inherit;
+    font: inherit;
+  }
+
+  .stage-btn:focus-visible {
+    outline: none;
+  }
+
+  .stage-btn:focus-visible .quote-block {
+    outline: 1px solid var(--hairline);
+    outline-offset: 12px;
+  }
+
+  .quote-block {
+    width: 100%;
+    max-width: 900px;
+    padding: 0 1.75rem;
+    margin-bottom: 12vh;
     text-align: center;
   }
 
-  .marquee {
-    font-family: "Bodoni MT", Didot, "Playfair Display", Georgia, serif;
-    font-weight: 700;
-    font-size: clamp(1.5rem, 6vw, 2.1rem);
-    letter-spacing: 0.06em;
-    color: var(--text-primary);
-    margin: 0 0 0.35rem;
+  .quote-text {
+    font-family: "Bebas Neue", "Arial Narrow", "Helvetica Neue Condensed", sans-serif;
+    font-weight: 400;
+    font-size: clamp(1.9rem, 6.2vw, 3.6rem);
+    line-height: 1.05;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
     text-wrap: balance;
-  }
-
-  .tagline {
-    font-family: "Futura", "Century Gothic", "Trebuchet MS", sans-serif;
-    font-size: 0.68rem;
-    text-transform: uppercase;
-    letter-spacing: 0.22em;
-    color: var(--text-muted);
-    margin: 0 0 1.4rem;
-  }
-
-  .bulbs {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-bottom: 1.4rem;
-  }
-
-  .bulbs span {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--bulb);
-    box-shadow: 0 0 6px 1px var(--bulb);
-    animation: flicker 2.6s ease-in-out infinite;
-  }
-
-  .bulbs span:nth-child(odd) { animation-delay: 0.4s; }
-  .bulbs span:nth-child(3n) { animation-delay: 0.9s; }
-  .bulbs span:nth-child(5n) { animation-delay: 1.3s; }
-
-  @keyframes flicker {
-    0%, 100% { opacity: 0.45; }
-    50% { opacity: 1; }
-  }
-
-  .cabinet {
-    position: relative;
-    background:
-      linear-gradient(180deg, var(--machine), var(--machine-2));
-    border: 1px solid var(--trim);
-    border-radius: 18px;
-    padding: 1.9rem 1.6rem 1.6rem;
-    box-shadow:
-      0 18px 40px var(--shadow),
-      inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  }
-
-  .window {
-    position: relative;
-    width: 148px;
-    height: 148px;
-    margin: 0 auto 1.4rem;
-    border-radius: 50%;
-    background:
-      radial-gradient(circle at 38% 30%, rgba(255, 255, 255, 0.35), transparent 45%),
-      radial-gradient(circle at 55% 60%, var(--surface-2), var(--machine-2) 75%);
-    border: 6px solid var(--trim);
-    box-shadow:
-      0 0 0 2px var(--machine-2),
-      inset 0 0 25px rgba(0, 0, 0, 0.55);
-    overflow: hidden;
-  }
-
-  .window::after {
-    content: "";
-    position: absolute;
-    inset: -40%;
-    background: conic-gradient(
-      from 0deg,
-      transparent 0deg,
-      rgba(241, 201, 118, 0.22) 40deg,
-      transparent 90deg,
-      transparent 300deg,
-      rgba(241, 201, 118, 0.12) 340deg,
-      transparent 360deg
-    );
-    animation: swirl 9s linear infinite;
-  }
-
-  .eye {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: "Bodoni MT", Didot, Georgia, serif;
-    font-size: 2.1rem;
-    color: var(--trim-bright);
-    text-shadow: 0 0 10px rgba(241, 201, 118, 0.6);
-  }
-
-  @keyframes swirl {
-    to { transform: rotate(360deg); }
-  }
-
-  .lever-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 0.4rem;
-  }
-
-  .pull-btn {
-    font-family: "Futura", "Century Gothic", "Trebuchet MS", sans-serif;
-    font-size: 0.72rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    color: var(--machine-2);
-    background: linear-gradient(180deg, var(--trim-bright), var(--trim));
-    border: none;
-    border-radius: 999px;
-    padding: 0.85rem 1.7rem;
-    cursor: pointer;
-    box-shadow: 0 4px 0 var(--machine-2), 0 6px 14px var(--shadow);
-    transition: transform 0.08s ease, box-shadow 0.08s ease;
-  }
-
-  .pull-btn:hover { filter: brightness(1.05); }
-
-  .pull-btn:active,
-  .pull-btn.pressed {
-    transform: translateY(3px);
-    box-shadow: 0 1px 0 var(--machine-2), 0 2px 8px var(--shadow);
-  }
-
-  .pull-btn:focus-visible {
-    outline: 2px solid var(--trim-bright);
-    outline-offset: 3px;
-  }
-
-  .slot {
-    height: 8px;
-    width: 70%;
-    margin: 1.3rem auto 0;
-    background: var(--machine-2);
-    border-radius: 4px;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.7);
-  }
-
-  .ticket-tray {
-    margin-top: -2px;
-    display: flex;
-    justify-content: center;
-    overflow: visible;
-  }
-
-  .ticket {
-    width: 84%;
-    background: var(--ticket);
-    color: var(--ticket-ink);
-    border-radius: 0 0 10px 10px;
-    padding: 0 1.1rem 1.15rem;
-    box-shadow: 0 12px 22px var(--shadow);
+    margin: 0 0 1.1rem;
     opacity: 0;
-    max-height: 0;
-    transform: translateY(-14px);
-    transition: opacity 0.45s ease, transform 0.45s ease, max-height 0.45s ease;
-    overflow: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
   }
 
-  .ticket.visible {
+  .quote-text.visible {
     opacity: 1;
-    max-height: 320px;
     transform: translateY(0);
-    padding-top: 0.2rem;
   }
 
-  .ticket::before {
-    content: "";
-    display: block;
-    height: 12px;
-    margin: 0 -1.1rem 0.6rem;
-    background-image: radial-gradient(circle, var(--machine) 6px, transparent 6.5px);
-    background-size: 18px 16px;
-    background-position: top center;
-    background-repeat: repeat-x;
-  }
-
-  .ticket-number {
-    font-family: "Courier New", ui-monospace, SFMono-Regular, monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    color: var(--ticket-ink-soft);
+  .quote-author {
+    font-family: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.24em;
     text-transform: uppercase;
-    margin-bottom: 0.5rem;
+    color: var(--muted);
+    opacity: 0;
+    transition: opacity 0.6s ease 0.1s;
   }
 
-  .ticket-text {
-    font-family: "Courier New", ui-monospace, SFMono-Regular, monospace;
-    font-size: 0.98rem;
-    line-height: 1.55;
-    margin: 0 0 0.7rem;
+  .quote-author.visible {
+    opacity: 1;
   }
 
-  .ticket-author {
-    font-family: "Courier New", ui-monospace, SFMono-Regular, monospace;
-    font-size: 0.78rem;
-    letter-spacing: 0.04em;
-    color: var(--ticket-ink-soft);
-    text-align: right;
-    margin: 0 0 0.9rem;
+  .quote-author::before {
+    content: "\2014  ";
   }
 
-  .ticket-author::before {
-    content: "\2014 ";
-  }
-
-  .ticket-foot {
-    font-family: "Courier New", ui-monospace, SFMono-Regular, monospace;
+  .prompt {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
     font-size: 0.65rem;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
-    color: var(--ticket-ink-soft);
-  }
-
-  .theme-toggle {
+    color: var(--muted);
     margin-top: 1.6rem;
-    background: none;
-    border: 1px solid var(--text-muted);
-    color: var(--text-muted);
-    font-family: "Futura", "Century Gothic", "Trebuchet MS", sans-serif;
-    font-size: 0.65rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 0.4rem 0.9rem;
-    border-radius: 999px;
-    cursor: pointer;
+    animation: pulse-op 2.6s ease-in-out infinite;
   }
 
-  .theme-toggle:focus-visible {
-    outline: 2px solid var(--trim-bright);
-    outline-offset: 2px;
+  @keyframes pulse-op {
+    0%, 100% { opacity: 0.35; }
+    50% { opacity: 0.9; }
+  }
+
+  .glitching .quote-text {
+    animation: glitch-text 0.32s steps(2, end);
+  }
+
+  @keyframes glitch-text {
+    0%   { transform: translate(0, 0); text-shadow: none; }
+    15%  { transform: translate(-3px, 1px); text-shadow: 2px 0 #c94b3f, -2px 0 #3f8fc9; }
+    30%  { transform: translate(2px, -1px); text-shadow: -2px 0 #c94b3f, 2px 0 #3f8fc9; }
+    45%  { transform: translate(-2px, 0); text-shadow: 2px 0 #c94b3f, -2px 0 #3f8fc9; }
+    60%  { transform: translate(1px, 1px); text-shadow: none; }
+    100% { transform: translate(0, 0); text-shadow: none; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .bulbs span, .window::after { animation: none; }
-    .pull-btn, .ticket { transition: none; }
+    .grain, .flicker, .hud .rec-dot, .prompt { animation: none; }
+    .quote-text, .quote-author { transition: none; }
+    .glitching .quote-text { animation: none; }
   }
 </style>
 </head>
 <body>
 
-<main class="stage">
-  <h1 class="marquee">Madame Oracle</h1>
-  <p class="tagline">Automatic Fortune Machine &mdash; Real Wisdom From History</p>
+<canvas id="scene" aria-hidden="true"></canvas>
+<div class="vignette"></div>
+<div class="grain"></div>
+<div class="scanlines"></div>
+<div class="flicker"></div>
+<div class="flash" id="flash"></div>
 
-  <div class="bulbs" aria-hidden="true">
-    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+<div class="hud"><span class="rec-dot"></span><span id="timecode">00:00:00:00</span></div>
+<div class="index" id="reelIndex">N&deg; 00 / 28</div>
+
+<button class="stage-btn" id="stage" type="button" aria-label="Draw a quote">
+  <div class="quote-block" id="quoteBlock">
+    <p class="quote-text" id="quoteText">Press to draw a fortune</p>
+    <p class="quote-author" id="quoteAuthor" style="opacity:0;"></p>
   </div>
-
-  <div class="cabinet">
-    <div class="window" aria-hidden="true">
-      <div class="eye">&#9788;</div>
-    </div>
-
-    <div class="lever-row">
-      <button class="pull-btn" id="pullBtn" type="button">Pull for Fortune</button>
-    </div>
-
-    <div class="slot" aria-hidden="true"></div>
-    <div class="ticket-tray">
-      <div class="ticket" id="ticket" role="status" aria-live="polite">
-        <div class="ticket-number" id="ticketNumber">No. 0000</div>
-        <p class="ticket-text" id="ticketText"></p>
-        <p class="ticket-author" id="ticketAuthor"></p>
-        <div class="ticket-foot">Drawn From the Archive</div>
-      </div>
-    </div>
-  </div>
-
-  <button class="theme-toggle" id="themeToggle" type="button">Toggle Light / Dark</button>
-</main>
+  <div class="prompt" id="prompt">Press anywhere to draw</div>
+</button>
 
 <script>
-  const quotes = [
-    { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
-    { text: "It always seems impossible until it's done.", author: "Nelson Mandela" },
-    { text: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt" },
-    { text: "In the middle of every difficulty lies opportunity.", author: "Albert Einstein" },
-    { text: "Whether you think you can, or you think you can't, you're right.", author: "Henry Ford" },
-    { text: "The best way to predict the future is to invent it.", author: "Alan Kay" },
-    { text: "What lies behind us and what lies before us are tiny matters compared to what lies within us.", author: "Ralph Waldo Emerson" },
-    { text: "You must be the change you wish to see in the world.", author: "Mahatma Gandhi" },
-    { text: "I have not failed. I've just found 10,000 ways that won't work.", author: "Thomas Edison" },
-    { text: "The only limit to our realization of tomorrow will be our doubts of today.", author: "Franklin D. Roosevelt" },
-    { text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
-    { text: "The journey of a thousand miles begins with a single step.", author: "Lao Tzu" },
-    { text: "Turn your wounds into wisdom.", author: "Oprah Winfrey" },
-    { text: "I alone cannot change the world, but I can cast a stone across the water to create many ripples.", author: "Mother Teresa" },
-    { text: "Nothing is impossible, the word itself says 'I'm possible.'", author: "Audrey Hepburn" },
-    { text: "The way to get started is to quit talking and begin doing.", author: "Walt Disney" },
-    { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
-    { text: "Twenty years from now you will be more disappointed by the things that you didn't do than by the ones you did do.", author: "Mark Twain" },
-    { text: "It does not matter how slowly you go as long as you do not stop.", author: "Confucius" },
-    { text: "Keep your face always toward the sunshine, and shadows will fall behind you.", author: "Walt Whitman" },
-    { text: "We know what we are, but know not what we may be.", author: "William Shakespeare" },
-    { text: "The best time to plant a tree was 20 years ago. The second best time is now.", author: "Chinese Proverb" },
-    { text: "Fortune favors the bold.", author: "Virgil" },
-    { text: "He who has a why to live can bear almost any how.", author: "Friedrich Nietzsche" },
-    { text: "The unexamined life is not worth living.", author: "Socrates" },
-    { text: "Nothing in life is to be feared, it is only to be understood.", author: "Marie Curie" },
-    { text: "You may not control all the events that happen to you, but you can decide not to be reduced by them.", author: "Maya Angelou" },
-    { text: "Although the world is full of suffering, it is also full of the overcoming of it.", author: "Helen Keller" }
+(function () {
+  "use strict";
+
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var quotes = [
+    { text: "The only way to do great work is to love what you do.", author: "Steve Jobs", cat: "fire" },
+    { text: "It always seems impossible until it's done.", author: "Nelson Mandela", cat: "lightning" },
+    { text: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt", cat: "void" },
+    { text: "In the middle of every difficulty lies opportunity.", author: "Albert Einstein", cat: "lightning" },
+    { text: "Whether you think you can, or you think you can't, you're right.", author: "Henry Ford", cat: "wind" },
+    { text: "The best way to predict the future is to invent it.", author: "Alan Kay", cat: "void" },
+    { text: "What lies behind us and what lies before us are tiny matters compared to what lies within us.", author: "Ralph Waldo Emerson", cat: "stone" },
+    { text: "You must be the change you wish to see in the world.", author: "Mahatma Gandhi", cat: "wind" },
+    { text: "I have not failed. I've just found 10,000 ways that won't work.", author: "Thomas Edison", cat: "fire" },
+    { text: "The only limit to our realization of tomorrow will be our doubts of today.", author: "Franklin D. Roosevelt", cat: "rain" },
+    { text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt", cat: "lightning" },
+    { text: "The journey of a thousand miles begins with a single step.", author: "Lao Tzu", cat: "wind" },
+    { text: "Turn your wounds into wisdom.", author: "Oprah Winfrey", cat: "rain" },
+    { text: "I alone cannot change the world, but I can cast a stone across the water to create many ripples.", author: "Mother Teresa", cat: "sea" },
+    { text: "Nothing is impossible, the word itself says 'I'm possible.'", author: "Audrey Hepburn", cat: "lightning" },
+    { text: "The way to get started is to quit talking and begin doing.", author: "Walt Disney", cat: "fire" },
+    { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill", cat: "stone" },
+    { text: "Twenty years from now you will be more disappointed by the things that you didn't do than by the ones you did do.", author: "Mark Twain", cat: "wind" },
+    { text: "It does not matter how slowly you go as long as you do not stop.", author: "Confucius", cat: "stone" },
+    { text: "Keep your face always toward the sunshine, and shadows will fall behind you.", author: "Walt Whitman", cat: "fire" },
+    { text: "We know what we are, but know not what we may be.", author: "William Shakespeare", cat: "void" },
+    { text: "The best time to plant a tree was 20 years ago. The second best time is now.", author: "Chinese Proverb", cat: "stone" },
+    { text: "Fortune favors the bold.", author: "Virgil", cat: "lightning" },
+    { text: "He who has a why to live can bear almost any how.", author: "Friedrich Nietzsche", cat: "void" },
+    { text: "The unexamined life is not worth living.", author: "Socrates", cat: "void" },
+    { text: "Nothing in life is to be feared, it is only to be understood.", author: "Marie Curie", cat: "stone" },
+    { text: "You may not control all the events that happen to you, but you can decide not to be reduced by them.", author: "Maya Angelou", cat: "sea" },
+    { text: "Although the world is full of suffering, it is also full of the overcoming of it.", author: "Helen Keller", cat: "rain" }
   ];
 
-  const pullBtn = document.getElementById('pullBtn');
-  const ticket = document.getElementById('ticket');
-  const ticketText = document.getElementById('ticketText');
-  const ticketAuthor = document.getElementById('ticketAuthor');
-  const ticketNumber = document.getElementById('ticketNumber');
-  const themeToggle = document.getElementById('themeToggle');
+  var canvas = document.getElementById("scene");
+  var ctx = canvas.getContext("2d");
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var W = 0, H = 0;
 
-  let lastIndex = -1;
-
-  function pickQuote() {
-    let index;
-    do {
-      index = Math.floor(Math.random() * quotes.length);
-    } while (index === lastIndex && quotes.length > 1);
-    lastIndex = index;
-    return quotes[index];
+  function resize() {
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width = W + "px";
+    canvas.style.height = H + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
+  window.addEventListener("resize", resize);
+  resize();
 
-  function dispenseTicket() {
-    pullBtn.classList.add('pressed');
-    setTimeout(() => pullBtn.classList.remove('pressed'), 160);
+  var CATS = {
+    lightning: { rgb: "230,235,255", mode: "bolt" },
+    sea:       { rgb: "90,150,160",  mode: "wave" },
+    wind:      { rgb: "190,195,198", mode: "streak" },
+    fire:      { rgb: "224,126,72",  mode: "ember" },
+    stone:     { rgb: "150,140,124", mode: "fog" },
+    void:      { rgb: "138,138,196", mode: "stars" },
+    rain:      { rgb: "120,150,180", mode: "rain" }
+  };
 
-    ticket.classList.remove('visible');
+  var current = "void";
+  var particles = [];
+  var boltPath = null;
+  var boltLife = 0;
+  var nextBoltAt = 0;
+  var t0 = performance.now();
+  var lastT = t0;
 
-    setTimeout(() => {
-      const quote = pickQuote();
-      ticketText.textContent = '“' + quote.text + '”';
-      ticketAuthor.textContent = quote.author;
-      ticketNumber.textContent = 'No. ' + String(Math.floor(Math.random() * 9999)).padStart(4, '0');
-      ticket.classList.add('visible');
-    }, 180);
-  }
+  function rand(a, b) { return a + Math.random() * (b - a); }
 
-  pullBtn.addEventListener('click', dispenseTicket);
+  function seedParticles(cat) {
+    particles = [];
+    var mode = CATS[cat].mode;
+    var count;
+    if (mode === "wave") count = 6;
+    else if (mode === "streak") count = 46;
+    else if (mode === "ember") count = 70;
+    else if (mode === "stars") count = 110;
+    else if (mode === "rain") count = 130;
+    else count = 0;
 
-  themeToggle.addEventListener('click', () => {
-    const root = document.documentElement;
-    const current = root.getAttribute('data-theme');
-    if (current === 'dark') {
-      root.setAttribute('data-theme', 'light');
-    } else if (current === 'light') {
-      root.removeAttribute('data-theme');
-    } else {
-      root.setAttribute('data-theme', 'dark');
+    for (var i = 0; i < count; i++) {
+      if (mode === "wave") {
+        particles.push({ phase: rand(0, Math.PI * 2), amp: rand(6, 26), speed: rand(0.15, 0.4), y: H * (0.55 + i * 0.06), wobble: rand(60, 140) });
+      } else if (mode === "streak") {
+        particles.push({ x: rand(-200, W), y: rand(0, H), len: rand(60, 220), speed: rand(260, 520), o: rand(0.08, 0.3) });
+      } else if (mode === "ember") {
+        particles.push({ x: rand(0, W), y: rand(H * 0.4, H + 40), r: rand(0.6, 2.2), speed: rand(14, 46), drift: rand(-8, 8), o: rand(0.15, 0.55), flick: rand(0, 10) });
+      } else if (mode === "stars") {
+        particles.push({ x: rand(0, W), y: rand(0, H), r: rand(0.4, 1.6), tw: rand(0, 10), speed: rand(1, 6), o: rand(0.2, 0.9) });
+      } else if (mode === "rain") {
+        particles.push({ x: rand(0, W), y: rand(-H, H), len: rand(14, 34), speed: rand(500, 900), o: rand(0.12, 0.4) });
+      }
     }
-  });
+    boltPath = null;
+    boltLife = 0;
+    nextBoltAt = performance.now() + rand(400, 1600);
+  }
+
+  function makeBolt() {
+    var pts = [];
+    var x = rand(W * 0.3, W * 0.7);
+    var y = 0;
+    pts.push([x, y]);
+    while (y < H * 0.62) {
+      x += rand(-46, 46);
+      y += rand(28, 60);
+      pts.push([x, y]);
+    }
+    return pts;
+  }
+
+  function draw(now) {
+    var dt = Math.min((now - lastT) / 1000, 0.05);
+    lastT = now;
+    var cfg = CATS[current];
+    ctx.clearRect(0, 0, W, H);
+
+    var grad = ctx.createRadialGradient(W / 2, H * 0.42, 0, W / 2, H * 0.42, Math.max(W, H) * 0.75);
+    grad.addColorStop(0, "rgba(" + cfg.rgb + ",0.05)");
+    grad.addColorStop(1, "rgba(0,0,0,0)");
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    if (cfg.mode === "wave") {
+      particles.forEach(function (p, i) {
+        p.phase += dt * p.speed;
+        ctx.beginPath();
+        for (var x = 0; x <= W; x += 8) {
+          var yy = p.y + Math.sin(x / p.wobble + p.phase) * p.amp;
+          if (x === 0) ctx.moveTo(x, yy); else ctx.lineTo(x, yy);
+        }
+        ctx.strokeStyle = "rgba(" + cfg.rgb + "," + (0.08 + i * 0.015) + ")";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      });
+    } else if (cfg.mode === "streak") {
+      particles.forEach(function (p) {
+        p.x += p.speed * dt;
+        if (p.x > W + 220) { p.x = -220; p.y = rand(0, H); }
+        ctx.strokeStyle = "rgba(" + cfg.rgb + "," + p.o + ")";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(p.x + p.len, p.y + p.len * 0.06);
+        ctx.stroke();
+      });
+    } else if (cfg.mode === "ember") {
+      particles.forEach(function (p) {
+        p.y -= p.speed * dt;
+        p.x += p.drift * dt;
+        p.flick += dt * 6;
+        if (p.y < H * 0.1) { p.y = H + rand(0, 40); p.x = rand(0, W); }
+        var o = p.o * (0.6 + 0.4 * Math.sin(p.flick));
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(" + cfg.rgb + "," + o + ")";
+        ctx.fill();
+      });
+    } else if (cfg.mode === "stars") {
+      particles.forEach(function (p) {
+        p.tw += dt * 1.4;
+        p.y += p.speed * dt * 0.06;
+        p.x -= p.speed * dt * 0.03;
+        if (p.y > H) p.y = 0;
+        if (p.x < 0) p.x = W;
+        var o = p.o * (0.5 + 0.5 * Math.sin(p.tw));
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(" + cfg.rgb + "," + o + ")";
+        ctx.fill();
+      });
+    } else if (cfg.mode === "rain") {
+      particles.forEach(function (p) {
+        p.y += p.speed * dt;
+        if (p.y > H) { p.y = -p.len; p.x = rand(0, W); }
+        ctx.strokeStyle = "rgba(" + cfg.rgb + "," + p.o + ")";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(p.x - 4, p.y + p.len);
+        ctx.stroke();
+      });
+    } else if (cfg.mode === "fog") {
+      for (var i = 0; i < 4; i++) {
+        var yBase = H * (0.55 + i * 0.1);
+        var shift = Math.sin(now / 4000 + i) * 30;
+        var g = ctx.createLinearGradient(0, yBase - 40, 0, yBase + 40);
+        g.addColorStop(0, "rgba(" + cfg.rgb + ",0)");
+        g.addColorStop(0.5, "rgba(" + cfg.rgb + "," + (0.05 + i * 0.015) + ")");
+        g.addColorStop(1, "rgba(" + cfg.rgb + ",0)");
+        ctx.fillStyle = g;
+        ctx.fillRect(shift - 60, yBase - 40, W + 120, 80);
+      }
+      ctx.beginPath();
+      ctx.moveTo(0, H);
+      var seedRand = 91 + Math.floor(now / 999999);
+      for (var x2 = 0; x2 <= W; x2 += W / 14) {
+        var hgt = H * 0.72 + Math.sin(x2 * 0.01 + seedRand) * 30;
+        ctx.lineTo(x2, hgt);
+      }
+      ctx.lineTo(W, H);
+      ctx.closePath();
+      ctx.fillStyle = "rgba(0,0,0,0.6)";
+      ctx.fill();
+    } else if (cfg.mode === "bolt") {
+      if (now > nextBoltAt && boltLife <= 0) {
+        boltPath = makeBolt();
+        boltLife = 0.12;
+        flashScreen(0.5);
+        nextBoltAt = now + rand(1200, 3400);
+      }
+      if (boltPath && boltLife > 0) {
+        boltLife -= dt;
+        ctx.save();
+        ctx.shadowBlur = 18;
+        ctx.shadowColor = "rgba(" + cfg.rgb + ",0.9)";
+        ctx.strokeStyle = "rgba(" + cfg.rgb + "," + Math.min(1, boltLife * 6) + ")";
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        boltPath.forEach(function (pt, i) {
+          if (i === 0) ctx.moveTo(pt[0], pt[1]); else ctx.lineTo(pt[0], pt[1]);
+        });
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
+
+    if (!reduceMotion) requestAnimationFrame(draw);
+  }
+
+  function flashScreen(strength) {
+    var el = document.getElementById("flash");
+    el.style.opacity = String(strength);
+    requestAnimationFrame(function () {
+      el.style.transition = "opacity 0.5s ease";
+      el.style.opacity = "0";
+      setTimeout(function () { el.style.transition = ""; }, 520);
+    });
+  }
+
+  seedParticles(current);
+  if (reduceMotion) {
+    draw(performance.now());
+  } else {
+    requestAnimationFrame(draw);
+  }
+
+  var stage = document.getElementById("stage");
+  var quoteText = document.getElementById("quoteText");
+  var quoteAuthor = document.getElementById("quoteAuthor");
+  var quoteBlock = document.getElementById("quoteBlock");
+  var promptEl = document.getElementById("prompt");
+  var reelIndex = document.getElementById("reelIndex");
+  var flashEl = document.getElementById("flash");
+  var lastIdx = -1;
+  var used = false;
+
+  function pick() {
+    var i;
+    do { i = Math.floor(Math.random() * quotes.length); } while (i === lastIdx && quotes.length > 1);
+    lastIdx = i;
+    return quotes[i];
+  }
+
+  function draw2() {
+    var q = pick();
+    current = q.cat;
+    seedParticles(current);
+
+    quoteText.classList.remove("visible");
+    quoteAuthor.classList.remove("visible");
+    quoteBlock.parentElement.classList.add("glitching");
+    flashScreen(0.22);
+
+    setTimeout(function () {
+      quoteText.textContent = "“" + q.text + "”";
+      quoteAuthor.textContent = q.author;
+      quoteText.classList.add("visible");
+      quoteAuthor.classList.add("visible");
+      quoteBlock.parentElement.classList.remove("glitching");
+    }, 160);
+
+    reelIndex.textContent = "N° " + String(lastIdx + 1).padStart(2, "0") + " / " + quotes.length;
+    if (!used) {
+      used = true;
+      promptEl.textContent = "Press for another";
+    }
+  }
+
+  stage.addEventListener("click", draw2);
+
+  function pad(n) { return String(n).padStart(2, "0"); }
+  function tick() {
+    var elapsed = (performance.now() - t0) / 1000;
+    var h = Math.floor(elapsed / 3600);
+    var m = Math.floor((elapsed % 3600) / 60);
+    var s = Math.floor(elapsed % 60);
+    var f = Math.floor((elapsed % 1) * 24);
+    document.getElementById("timecode").textContent = pad(h) + ":" + pad(m) + ":" + pad(s) + ":" + pad(f);
+    if (!reduceMotion) requestAnimationFrame(tick);
+  }
+  if (!reduceMotion) requestAnimationFrame(tick); else document.getElementById("timecode").textContent = "00:00:00:00";
+})();
 </script>
 
 </body>
