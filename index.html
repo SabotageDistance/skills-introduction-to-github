@@ -233,6 +233,21 @@
     content: "\2014  ";
   }
 
+  .quote-source {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    font-style: italic;
+    color: var(--muted);
+    opacity: 0;
+    margin: 0.4rem 0 0;
+    transition: opacity 0.6s ease 0.2s;
+  }
+
+  .quote-source.visible {
+    opacity: 0.7;
+  }
+
   .prompt {
     font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
     font-size: 0.65rem;
@@ -263,7 +278,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     .grain, .flicker, .hud .rec-dot, .prompt { animation: none; }
-    .quote-text, .quote-author { transition: none; }
+    .quote-text, .quote-author, .quote-source { transition: none; }
     .glitching .quote-text { animation: none; }
   }
 </style>
@@ -283,7 +298,8 @@
 <button class="stage-btn" id="stage" type="button" aria-label="Draw a quote">
   <div class="quote-block" id="quoteBlock">
     <p class="quote-text" id="quoteText">Press to draw a fortune</p>
-    <p class="quote-author" id="quoteAuthor" style="opacity:0;"></p>
+    <p class="quote-author" id="quoteAuthor"></p>
+    <p class="quote-source" id="quoteSource"></p>
   </div>
   <div class="prompt" id="prompt">Press anywhere to draw</div>
 </button>
@@ -295,7 +311,7 @@
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   var quotes = [
-    { text: "The only way to do great work is to love what you do.", author: "Steve Jobs", cat: "fire" },
+    { text: "The only way to do great work is to love what you do.", author: "Steve Jobs", cat: "fire", source: "Stanford Commencement Address, 2005" },
     { text: "It always seems impossible until it's done.", author: "Nelson Mandela", cat: "lightning" },
     { text: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt", cat: "void" },
     { text: "In the middle of every difficulty lies opportunity.", author: "Albert Einstein", cat: "lightning" },
@@ -306,7 +322,7 @@
     { text: "I have not failed. I've just found 10,000 ways that won't work.", author: "Thomas Edison", cat: "fire" },
     { text: "The only limit to our realization of tomorrow will be our doubts of today.", author: "Franklin D. Roosevelt", cat: "rain" },
     { text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt", cat: "lightning" },
-    { text: "The journey of a thousand miles begins with a single step.", author: "Lao Tzu", cat: "wind" },
+    { text: "The journey of a thousand miles begins with a single step.", author: "Lao Tzu", cat: "wind", source: "Tao Te Ching, ch. 64, c. 6th century BCE" },
     { text: "Turn your wounds into wisdom.", author: "Oprah Winfrey", cat: "rain" },
     { text: "I alone cannot change the world, but I can cast a stone across the water to create many ripples.", author: "Mother Teresa", cat: "sea" },
     { text: "Nothing is impossible, the word itself says 'I'm possible.'", author: "Audrey Hepburn", cat: "lightning" },
@@ -315,87 +331,87 @@
     { text: "Twenty years from now you will be more disappointed by the things that you didn't do than by the ones you did do.", author: "Mark Twain", cat: "wind" },
     { text: "It does not matter how slowly you go as long as you do not stop.", author: "Confucius", cat: "stone" },
     { text: "Keep your face always toward the sunshine, and shadows will fall behind you.", author: "Walt Whitman", cat: "fire" },
-    { text: "We know what we are, but know not what we may be.", author: "William Shakespeare", cat: "void" },
-    { text: "The best time to plant a tree was 20 years ago. The second best time is now.", author: "Chinese Proverb", cat: "stone" },
-    { text: "Fortune favors the bold.", author: "Virgil", cat: "lightning" },
-    { text: "He who has a why to live can bear almost any how.", author: "Friedrich Nietzsche", cat: "void" },
-    { text: "The unexamined life is not worth living.", author: "Socrates", cat: "void" },
+    { text: "We know what we are, but know not what we may be.", author: "William Shakespeare", cat: "void", source: "Hamlet, Act IV, Scene v, c. 1600" },
+    { text: "The best time to plant a tree was 20 years ago. The second best time is now.", author: "Chinese Proverb", cat: "stone", source: "traditional saying" },
+    { text: "Fortune favors the bold.", author: "Virgil", cat: "lightning", source: "Aeneid, Book X, c. 19 BCE" },
+    { text: "He who has a why to live can bear almost any how.", author: "Friedrich Nietzsche", cat: "void", source: "Twilight of the Idols, 1888" },
+    { text: "The unexamined life is not worth living.", author: "Socrates", cat: "void", source: "Plato, Apology, c. 399 BCE" },
     { text: "Nothing in life is to be feared, it is only to be understood.", author: "Marie Curie", cat: "stone" },
     { text: "You may not control all the events that happen to you, but you can decide not to be reduced by them.", author: "Maya Angelou", cat: "sea" },
     { text: "Although the world is full of suffering, it is also full of the overcoming of it.", author: "Helen Keller", cat: "rain" },
 
-    { text: "You have power over your mind, not outside events. Realize this, and you will find strength.", author: "Marcus Aurelius", cat: "stone" },
-    { text: "It is not that we have a short time to live, but that we waste a lot of it.", author: "Seneca", cat: "wind" },
-    { text: "It's not what happens to you, but how you react to it that matters.", author: "Epictetus", cat: "stone" },
-    { text: "No man ever steps in the same river twice.", author: "Heraclitus", cat: "sea" },
-    { text: "The wound is the place where the light enters you.", author: "Rumi", cat: "lightning" },
-    { text: "All of humanity's problems stem from man's inability to sit quietly in a room alone.", author: "Blaise Pascal", cat: "void" },
-    { text: "The highest activity a human being can attain is learning for understanding, because to understand is to be free.", author: "Baruch Spinoza", cat: "void" },
-    { text: "Life can only be understood backwards; but it must be lived forwards.", author: "Søren Kierkegaard", cat: "sea" },
+    { text: "You have power over your mind, not outside events. Realize this, and you will find strength.", author: "Marcus Aurelius", cat: "stone", source: "Meditations, c. 170 CE" },
+    { text: "It is not that we have a short time to live, but that we waste a lot of it.", author: "Seneca", cat: "wind", source: "On the Shortness of Life, c. 49 CE" },
+    { text: "It's not what happens to you, but how you react to it that matters.", author: "Epictetus", cat: "stone", source: "The Enchiridion, c. 125 CE" },
+    { text: "No man ever steps in the same river twice.", author: "Heraclitus", cat: "sea", source: "fragment, c. 500 BCE" },
+    { text: "The wound is the place where the light enters you.", author: "Rumi", cat: "lightning", source: "The Masnavi, 13th century" },
+    { text: "All of humanity's problems stem from man's inability to sit quietly in a room alone.", author: "Blaise Pascal", cat: "void", source: "Pensées, 1670" },
+    { text: "The highest activity a human being can attain is learning for understanding, because to understand is to be free.", author: "Baruch Spinoza", cat: "void", source: "Ethics, 1677" },
+    { text: "Life can only be understood backwards; but it must be lived forwards.", author: "Søren Kierkegaard", cat: "sea", source: "Journals, 1843" },
     { text: "Freedom is what you do with what's been done to you.", author: "Jean-Paul Sartre", cat: "wind" },
     { text: "Change your life today. Don't gamble on the future, act now, without delay.", author: "Simone de Beauvoir", cat: "fire" },
-    { text: "In the midst of winter, I found there was, within me, an invincible summer.", author: "Albert Camus", cat: "fire" },
-    { text: "In the midst of chaos, there is also opportunity.", author: "Sun Tzu", cat: "lightning" },
+    { text: "In the midst of winter, I found there was, within me, an invincible summer.", author: "Albert Camus", cat: "fire", source: "Return to Tipasa, 1952" },
+    { text: "In the midst of chaos, there is also opportunity.", author: "Sun Tzu", cat: "lightning", source: "The Art of War, c. 5th century BCE" },
     { text: "Everyone thinks of changing the world, but no one thinks of changing himself.", author: "Leo Tolstoy", cat: "stone" },
     { text: "To live without hope is to cease to live.", author: "Fyodor Dostoevsky", cat: "void" },
-    { text: "Even the darkest night will end and the sun will rise.", author: "Victor Hugo", cat: "void" },
+    { text: "Even the darkest night will end and the sun will rise.", author: "Victor Hugo", cat: "void", source: "Les Misérables, 1862" },
     { text: "It is not true that people stop pursuing dreams because they grow old; they grow old because they stop pursuing dreams.", author: "Gabriel García Márquez", cat: "sea" },
     { text: "If you want to fly, you have to give up the things that weigh you down.", author: "Toni Morrison", cat: "wind" },
     { text: "If you don't like someone's story, write your own.", author: "Chinua Achebe", cat: "fire" },
-    { text: "Pain is inevitable. Suffering is optional.", author: "Haruki Murakami", cat: "rain" },
+    { text: "Pain is inevitable. Suffering is optional.", author: "Haruki Murakami", cat: "rain", source: "What I Talk About When I Talk About Running, 2007" },
     { text: "You cannot find peace by avoiding life.", author: "Virginia Woolf", cat: "stone" },
-    { text: "Paths are made by walking.", author: "Franz Kafka", cat: "wind" },
+    { text: "Paths are made by walking.", author: "Franz Kafka", cat: "wind", source: "The Zürau Aphorisms, 1917" },
     { text: "Nothing is built on stone; all is built on sand, but we must build as if the sand were stone.", author: "Jorge Luis Borges", cat: "stone" },
     { text: "In the end we all become stories.", author: "Isabel Allende", cat: "void" },
     { text: "We are what we repeatedly do. Excellence, then, is not an act, but a habit.", author: "Aristotle", cat: "stone" },
     { text: "You can't cross the sea merely by standing and staring at the water.", author: "Rabindranath Tagore", cat: "sea" },
     { text: "Any idiot can face a crisis; it's the day to day living that wears you out.", author: "Anton Chekhov", cat: "rain" },
-    { text: "What we think, we become.", author: "Buddha", cat: "void" },
-    { text: "The present moment is filled with joy and happiness. If you are attentive, you will see it.", author: "Thich Nhat Hanh", cat: "sea" },
-    { text: "Happiness is not something ready-made. It comes from your own actions.", author: "Dalai Lama", cat: "fire" },
-    { text: "Out of suffering have emerged the strongest souls.", author: "Kahlil Gibran", cat: "stone" },
-    { text: "Let nothing disturb you, let nothing frighten you; all things pass away, God never changes.", author: "Teresa of Ávila", cat: "void" },
-    { text: "Even after all this time, the sun never says to the earth, 'You owe me.' Look what happens with a love like that. It lights the whole sky.", author: "Hafiz", cat: "fire" },
-    { text: "Even kings and emperors with heaps of wealth and vast dominion cannot compare with an ant filled with the love of God.", author: "Guru Nanak", cat: "void" },
+    { text: "What we think, we become.", author: "Buddha", cat: "void", source: "Dhammapada, c. 3rd century BCE" },
+    { text: "The present moment is filled with joy and happiness. If you are attentive, you will see it.", author: "Thich Nhat Hanh", cat: "sea", source: "Peace Is Every Step, 1991" },
+    { text: "Happiness is not something ready-made. It comes from your own actions.", author: "Dalai Lama", cat: "fire", source: "The Art of Happiness, 1998" },
+    { text: "Out of suffering have emerged the strongest souls.", author: "Kahlil Gibran", cat: "stone", source: "The Prophet, 1923" },
+    { text: "Let nothing disturb you, let nothing frighten you; all things pass away, God never changes.", author: "Teresa of Ávila", cat: "void", source: "attributed prayer-poem, 16th century" },
+    { text: "Even after all this time, the sun never says to the earth, 'You owe me.' Look what happens with a love like that. It lights the whole sky.", author: "Hafiz", cat: "fire", source: "The Gift, trans. Daniel Ladinsky, 1999" },
+    { text: "Even kings and emperors with heaps of wealth and vast dominion cannot compare with an ant filled with the love of God.", author: "Guru Nanak", cat: "void", source: "Guru Granth Sahib" },
     { text: "The season of failure is the best time for sowing the seeds of success.", author: "Paramahansa Yogananda", cat: "stone" },
     { text: "Do your little bit of good where you are; it's those little bits of good put together that overwhelm the world.", author: "Desmond Tutu", cat: "sea" },
-    { text: "I am not bound to win, but I am bound to be true.", author: "Abraham Lincoln", cat: "stone" },
+    { text: "I am not bound to win, but I am bound to be true.", author: "Abraham Lincoln", cat: "stone", source: "letter to Isham Reavis, 1855" },
     { text: "Faith is taking the first step even when you don't see the whole staircase.", author: "Martin Luther King Jr.", cat: "lightning" },
     { text: "Trust yourself. Create the kind of self that you will be happy to live with all your life.", author: "Golda Meir", cat: "void" },
     { text: "The power to question is the basis of all human progress.", author: "Indira Gandhi", cat: "lightning" },
     { text: "A people that loves freedom will in the end be free.", author: "Simón Bolívar", cat: "wind" },
     { text: "It is a sin not to do what one is capable of doing.", author: "José Martí", cat: "fire" },
-    { text: "Do not weep for me. I know that my country, which is suffering so much, will know how to defend its independence and its liberty.", author: "Patrice Lumumba", cat: "rain" },
-    { text: "At the stroke of the midnight hour, when the world sleeps, India will awake to life and freedom.", author: "Jawaharlal Nehru", cat: "lightning" },
-    { text: "It is not power that corrupts but fear.", author: "Aung San Suu Kyi", cat: "stone" },
+    { text: "Do not weep for me. I know that my country, which is suffering so much, will know how to defend its independence and its liberty.", author: "Patrice Lumumba", cat: "rain", source: "last letter to Pauline Lumumba, January 1961" },
+    { text: "At the stroke of the midnight hour, when the world sleeps, India will awake to life and freedom.", author: "Jawaharlal Nehru", cat: "lightning", source: "‘Tryst with Destiny’ speech, 14 August 1947" },
+    { text: "It is not power that corrupts but fear.", author: "Aung San Suu Kyi", cat: "stone", source: "Freedom from Fear, 1991" },
     { text: "Freedom is not something that one people can bestow on another as a gift.", author: "Kwame Nkrumah", cat: "wind" },
-    { text: "Hope is not the conviction that something will turn out well, but the certainty that something makes sense, regardless of how it turns out.", author: "Václav Havel", cat: "rain" },
-    { text: "It's the little things citizens do. That's what will make the difference. My little thing is planting trees.", author: "Wangari Maathai", cat: "sea" },
-    { text: "Feet, what do I need you for when I have wings to fly?", author: "Frida Kahlo", cat: "wind" },
+    { text: "Hope is not the conviction that something will turn out well, but the certainty that something makes sense, regardless of how it turns out.", author: "Václav Havel", cat: "rain", source: "Disturbing the Peace, 1986" },
+    { text: "It's the little things citizens do. That's what will make the difference. My little thing is planting trees.", author: "Wangari Maathai", cat: "sea", source: "Nobel Lecture, 2004" },
+    { text: "Feet, what do I need you for when I have wings to fly?", author: "Frida Kahlo", cat: "wind", source: "diary, c. 1944–1954" },
     { text: "He who does not know how to look back at where he came from will never get to his destination.", author: "José Rizal", cat: "stone" },
     { text: "Truth is powerful and it prevails.", author: "Sojourner Truth", cat: "lightning" },
-    { text: "If there is no struggle, there is no progress.", author: "Frederick Douglass", cat: "fire" },
-    { text: "The man dies in all who keep silent in the face of tyranny.", author: "Wole Soyinka", cat: "stone" },
+    { text: "If there is no struggle, there is no progress.", author: "Frederick Douglass", cat: "fire", source: "‘West India Emancipation’ speech, 1857" },
+    { text: "The man dies in all who keep silent in the face of tyranny.", author: "Wole Soyinka", cat: "stone", source: "The Man Died: Prison Notes, 1972" },
     { text: "You must never be fearful about what you are doing when it is right.", author: "Rosa Parks", cat: "lightning" },
-    { text: "He who cannot change the very fabric of his thought will never be able to change reality.", author: "Anwar Sadat", cat: "void" },
-    { text: "All life is Yoga.", author: "Sri Aurobindo", cat: "void" },
+    { text: "He who cannot change the very fabric of his thought will never be able to change reality.", author: "Anwar Sadat", cat: "void", source: "In Search of Identity, 1978" },
+    { text: "All life is Yoga.", author: "Sri Aurobindo", cat: "void", source: "The Synthesis of Yoga, 1914–1921" },
     { text: "Arise, awake, and stop not until the goal is reached.", author: "Swami Vivekananda", cat: "lightning" },
-    { text: "There is nothing outside of yourself that can ever enable you to get better, stronger, richer, quicker, or smarter. Everything is within.", author: "Miyamoto Musashi", cat: "fire" },
-    { text: "The great man is he who does not lose his child's heart.", author: "Mencius", cat: "void" },
-    { text: "The most potent weapon in the hands of the oppressor is the mind of the oppressed.", author: "Steve Biko", cat: "stone" },
-    { text: "Attention is the rarest and purest form of generosity.", author: "Simone Weil", cat: "void" },
-    { text: "When the whole world is silent, even one voice becomes powerful.", author: "Malala Yousafzai", cat: "lightning" },
-    { text: "Where there's hope, there's life.", author: "Anne Frank", cat: "void" },
-    { text: "When we are no longer able to change a situation, we are challenged to change ourselves.", author: "Viktor Frankl", cat: "stone" },
+    { text: "There is nothing outside of yourself that can ever enable you to get better, stronger, richer, quicker, or smarter. Everything is within.", author: "Miyamoto Musashi", cat: "fire", source: "The Book of Five Rings, 1645" },
+    { text: "The great man is he who does not lose his child's heart.", author: "Mencius", cat: "void", source: "Mencius, Book IV, c. 3rd century BCE" },
+    { text: "The most potent weapon in the hands of the oppressor is the mind of the oppressed.", author: "Steve Biko", cat: "stone", source: "I Write What I Like, 1978" },
+    { text: "Attention is the rarest and purest form of generosity.", author: "Simone Weil", cat: "void", source: "Gravity and Grace, 1947" },
+    { text: "When the whole world is silent, even one voice becomes powerful.", author: "Malala Yousafzai", cat: "lightning", source: "UN Youth Assembly speech, 12 July 2013" },
+    { text: "Where there's hope, there's life.", author: "Anne Frank", cat: "void", source: "The Diary of a Young Girl, 1947" },
+    { text: "When we are no longer able to change a situation, we are challenged to change ourselves.", author: "Viktor Frankl", cat: "stone", source: "Man's Search for Meaning, 1946" },
     { text: "Who looks outside, dreams; who looks inside, awakes.", author: "Carl Jung", cat: "void" },
-    { text: "Until death, it is all life.", author: "Miguel de Cervantes", cat: "fire" },
-    { text: "Consider your origin; you were not made to live like brutes, but to follow virtue and knowledge.", author: "Dante Alighieri", cat: "stone" },
+    { text: "Until death, it is all life.", author: "Miguel de Cervantes", cat: "fire", source: "Don Quixote, 1605" },
+    { text: "Consider your origin; you were not made to live like brutes, but to follow virtue and knowledge.", author: "Dante Alighieri", cat: "stone", source: "Inferno, Canto XXVI, c. 1314" },
     { text: "Nothing is worth more than this day.", author: "Johann Wolfgang von Goethe", cat: "fire" },
-    { text: "Life shrinks or expands in proportion to one's courage.", author: "Anaïs Nin", cat: "wind" },
-    { text: "I hope for nothing. I fear nothing. I am free.", author: "Nikos Kazantzakis", cat: "void" },
+    { text: "Life shrinks or expands in proportion to one's courage.", author: "Anaïs Nin", cat: "wind", source: "The Diary of Anaïs Nin" },
+    { text: "I hope for nothing. I fear nothing. I am free.", author: "Nikos Kazantzakis", cat: "void", source: "epitaph, Heraklion, Crete, 1957" },
     { text: "The most difficult thing is the decision to act, the rest is merely tenacity.", author: "Amelia Earhart", cat: "wind" },
-    { text: "A people without the knowledge of their past history, origin and culture is like a tree without roots.", author: "Marcus Garvey", cat: "stone" },
-    { text: "Inside us there is something that has no name, and that something is what we are.", author: "José Saramago", cat: "void" }
+    { text: "A people without the knowledge of their past history, origin and culture is like a tree without roots.", author: "Marcus Garvey", cat: "stone", source: "Philosophy and Opinions of Marcus Garvey, 1923" },
+    { text: "Inside us there is something that has no name, and that something is what we are.", author: "José Saramago", cat: "void", source: "Blindness, 1995" }
   ];
 
   var canvas = document.getElementById("scene");
@@ -616,6 +632,7 @@
   var stage = document.getElementById("stage");
   var quoteText = document.getElementById("quoteText");
   var quoteAuthor = document.getElementById("quoteAuthor");
+  var quoteSource = document.getElementById("quoteSource");
   var quoteBlock = document.getElementById("quoteBlock");
   var promptEl = document.getElementById("prompt");
   var reelIndex = document.getElementById("reelIndex");
@@ -637,6 +654,7 @@
 
     quoteText.classList.remove("visible");
     quoteAuthor.classList.remove("visible");
+    quoteSource.classList.remove("visible");
     quoteBlock.parentElement.classList.add("glitching");
     flashScreen(0.22);
 
@@ -645,6 +663,12 @@
       quoteAuthor.textContent = q.author;
       quoteText.classList.add("visible");
       quoteAuthor.classList.add("visible");
+      if (q.source) {
+        quoteSource.textContent = q.source;
+        quoteSource.classList.add("visible");
+      } else {
+        quoteSource.textContent = "";
+      }
       quoteBlock.parentElement.classList.remove("glitching");
     }, 160);
 
