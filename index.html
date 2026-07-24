@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Madame Oracle's Fortune Machine</title>
+<style>
+  :root {
+    --surface: #170809;
+    --surface-2: #260d10;
+    --machine: #3a1015;
+    --machine-2: #2a0b0f;
+    --trim: #d4a24c;
+    --trim-bright: #f1c976;
+    --ticket: #f4ead0;
+    --ticket-ink: #2b1d12;
+    --ticket-ink-soft: #6b5636;
+    --bulb: #e3a13d;
+    --text-primary: #f4ead0;
+    --text-muted: #b9925c;
+    --shadow: rgba(0, 0, 0, 0.55);
+  }
+
+  :root[data-theme="light"] {
+    --surface: #f3e7c9;
+    --surface-2: #ecdcb4;
+    --machine: #6b1220;
+    --machine-2: #560f1a;
+    --trim: #b9862f;
+    --trim-bright: #dcae52;
+    --ticket: #fbf5e4;
+    --ticket-ink: #2b1d12;
+    --ticket-ink-soft: #6b5636;
+    --bulb: #e8b354;
+    --text-primary: #3a1015;
+    --text-muted: #7a5a34;
+    --shadow: rgba(60, 30, 10, 0.25);
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --surface: #f3e7c9;
+      --surface-2: #ecdcb4;
+      --machine: #6b1220;
+      --machine-2: #560f1a;
+      --trim: #b9862f;
+      --trim-bright: #dcae52;
+      --ticket: #fbf5e4;
+      --ticket-ink: #2b1d12;
+      --ticket-ink-soft: #6b5636;
+      --bulb: #e8b354;
+      --text-primary: #3a1015;
+      --text-muted: #7a5a34;
+      --shadow: rgba(60, 30, 10, 0.25);
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1.25rem;
+    background:
+      radial-gradient(ellipse at 50% -10%, var(--surface-2), transparent 60%),
+      var(--surface);
+    color: var(--text-primary);
+    font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .stage {
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+  }
+
+  .marquee {
+    font-family: "Bodoni MT", Didot, "Playfair Display", Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 6vw, 2.1rem);
+    letter-spacing: 0.06em;
+    color: var(--text-primary);
+    margin: 0 0 0.35rem;
+    text-wrap: balance;
+  }
+
+  .tagline {
+    font-family: "Futura", "Century Gothic", "Trebuchet MS", sans-serif;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--text-muted);
+    margin: 0 0 1.4rem;
+  }
+
+  .bulbs {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1.4rem;
+  }
+
+  .bulbs span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--bulb);
+    box-shadow: 0 0 6px 1px var(--bulb);
+    animation: flicker 2.6s ease-in-out infinite;
+  }
+
+  .bulbs span:nth-child(odd) { animation-delay: 0.4s; }
+  .bulbs span:nth-child(3n) { animation-delay: 0.9s; }
+  .bulbs span:nth-child(5n) { animation-delay: 1.3s; }
+
+  @keyframes flicker {
+    0%, 100% { opacity: 0.45; }
+    50% { opacity: 1; }
+  }
+
+  .cabinet {
+    position: relative;
+    background:
+      linear-gradient(180deg, var(--machine), var(--machine-2));
+    border: 1px solid var(--trim);
+    border-radius: 18px;
+    padding: 1.9rem 1.6rem 1.6rem;
+    box-shadow:
+      0 18px 40px var(--shadow),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .window {
+    position: relative;
+    width: 148px;
+    height: 148px;
+    margin: 0 auto 1.4rem;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 38% 30%, rgba(255, 255, 255, 0.35), transparent 45%),
+      radial-gradient(circle at 55% 60%, var(--surface-2), var(--machine-2) 75%);
+    border: 6px solid var(--trim);
+    box-shadow:
+      0 0 0 2px var(--machine-2),
+      inset 0 0 25px rgba(0, 0, 0, 0.55);
+    overflow: hidden;
+  }
+
+  .window::after {
+    content: "";
+    position: absolute;
+    inset: -40%;
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      rgba(241, 201, 118, 0.22) 40deg,
+      transparent 90deg,
+      transparent 300deg,
+      rgba(241, 201, 118, 0.12) 340deg,
+      transparent 360deg
+    );
+    animation: swirl 9s linear infinite;
+  }
+
+  .eye {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Bodoni MT", Didot, Georgia, serif;
+    font-size: 2.1rem;
+    color: var(--trim-bright);
+    text-shadow: 0 0 10px rgba(241, 201, 118, 0.6);
+  }
+
+  @keyframes swirl {
+    to { transform: rotate(360deg); }
+  }
+
+  .lever-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .pull-btn {
+    font-family: "Futura", "Century Gothic", "Trebuchet MS", sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--machine-2);
+    background: linear-gradient(180deg, var(--trim-bright), var(--trim));
+    border: none;
+    border-radius: 999px;
+    padding: 0.85rem 1.7rem;
+    cursor: pointer;
+    box-shadow: 0 4px 0 var(--machine-2), 0 6px 14px var(--shadow);
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+  }
+
+  .pull-btn:hover { filter: brightness(1.05); }
+
+  .pull-btn:active,
+  .pull-btn.pressed {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 var(--machine-2), 0 2px 8px var(--shadow);
+  }
+
+  .pull-btn:focus-visible {
+    outline: 2px solid var(--trim-bright);
+    outline-offset: 3px;
+  }
+
+  .slot {
+    height: 8px;
+    width: 70%;
+    margin: 1.3rem auto 0;
+    background: var(--machine-2);
+    border-radius: 4px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.7);
+  }
+
+  .ticket-tray {
+    margin-top: -2px;
+    display: flex;
+    justify-content: center;
+    overflow: visible;
+  }
+
+  .ticket {
+    width: 84%;
+    background: var(--ticket);
+    color: var(--ticket-ink);
+    border-radius: 0 0 10px 10px;
+    padding: 0 1.1rem 1.15rem;
+    box-shadow: 0 12px 22px var(--shadow);
+    opacity: 0;
+    max-height: 0;
+    transform: translateY(-14px);
+    transition: opacity 0.45s ease, transform 0.45s ease, max-height 0.45s ease;
+    overflow: hidden;
+  }
+
+  .ticket.visible {
+    opacity: 1;
+    max-height: 320px;
+    transform: translateY(0);
+    padding-top: 0.2rem;
+  }
+
+  .ticket::before {
+    content: "";
+    display: block;
+    height: 12px;
+    margin: 0 -1.1rem 0.6rem;
+    background-image: radial-gradient(circle, var(--machine) 6px, transparent 6.5px);
+    background-size: 18px 16px;
+    background-position: top center;
+    background-repeat: repeat-x;
+  }
+
+  .ticket-number {
+    font-family: "Courier New", ui-monospace, SFMono-Regular, monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    color: var(--ticket-ink-soft);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .ticket-text {
+    font-family: "Courier New", ui-monospace, SFMono-Regular, monospace;
+    font-size: 0.98rem;
+    line-height: 1.55;
+    margin: 0 0 0.7rem;
+  }
+
+  .ticket-foot {
+    font-family: "Courier New", ui-monospace, SFMono-Regular, monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ticket-ink-soft);
+  }
+
+  .theme-toggle {
+    margin-top: 1.6rem;
+    background: none;
+    border: 1px solid var(--text-muted);
+    color: var(--text-muted);
+    font-family: "Futura", "Century Gothic", "Trebuchet MS", sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+
+  .theme-toggle:focus-visible {
+    outline: 2px solid var(--trim-bright);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bulbs span, .window::after { animation: none; }
+    .pull-btn, .ticket { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<main class="stage">
+  <h1 class="marquee">Madame Oracle</h1>
+  <p class="tagline">Automatic Fortune Machine &mdash; One Pull, One Truth</p>
+
+  <div class="bulbs" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <div class="cabinet">
+    <div class="window" aria-hidden="true">
+      <div class="eye">&#9788;</div>
+    </div>
+
+    <div class="lever-row">
+      <button class="pull-btn" id="pullBtn" type="button">Pull for Fortune</button>
+    </div>
+
+    <div class="slot" aria-hidden="true"></div>
+    <div class="ticket-tray">
+      <div class="ticket" id="ticket" role="status" aria-live="polite">
+        <div class="ticket-number" id="ticketNumber">No. 0000</div>
+        <p class="ticket-text" id="ticketText"></p>
+        <div class="ticket-foot">Printed by the Ether</div>
+      </div>
+    </div>
+  </div>
+
+  <button class="theme-toggle" id="themeToggle" type="button">Toggle Light / Dark</button>
+</main>
+
+<script>
+  const prophecies = [
+    "The path you fear to walk is the one that leads you home.",
+    "A door you have long overlooked is about to open.",
+    "What you seek is already seeking you.",
+    "Your patience, though tested, will be rewarded within the turning of a season.",
+    "Today's small step is tomorrow's great leap.",
+    "You carry more strength than the mirror shows you.",
+    "A stranger's words will soon become a turning point.",
+    "The storm you are in is shaping the calm you deserve.",
+    "Trust the timing of your life; nothing arrives too early or too late.",
+    "An old wound is closing, though you have not noticed the healing.",
+    "Fortune is rearranging itself in your favor.",
+    "Say yes to the thing that frightens you a little and excites you a lot.",
+    "Your intuition is not loud, but it is right. Listen closer.",
+    "Someone is thinking of reaching out to you. Answer when they do.",
+    "The chapter closing now was never meant to be the whole story.",
+    "Abundance flows toward those who first believe they are worthy of it.",
+    "A decision made in stillness will serve you better than one made in haste.",
+    "You are exactly where you need to be to become who you are meant to be.",
+    "The seeds you planted in silence will bloom in public.",
+    "Let go of the rope you've been pulling alone; help is closer than you think.",
+    "Your next chapter begins the moment you stop rereading the last one.",
+    "A risk taken with an open heart cannot truly fail.",
+    "The clarity you've prayed for arrives after one more leap of faith.",
+    "What feels like an ending is only room being cleared for something greater.",
+    "Your kindness today plants a fortune you'll harvest tomorrow.",
+    "The answer you need is inside a question you haven't asked yet.",
+    "Fortune favors the one who moves before seeing the whole staircase.",
+    "You are not behind. You are exactly on time.",
+    "A quiet victory is coming, one that only you will fully understand.",
+    "The version of you that you're becoming is already proud of you."
+  ];
+
+  const pullBtn = document.getElementById('pullBtn');
+  const ticket = document.getElementById('ticket');
+  const ticketText = document.getElementById('ticketText');
+  const ticketNumber = document.getElementById('ticketNumber');
+  const themeToggle = document.getElementById('themeToggle');
+
+  let lastIndex = -1;
+
+  function pickProphecy() {
+    let index;
+    do {
+      index = Math.floor(Math.random() * prophecies.length);
+    } while (index === lastIndex && prophecies.length > 1);
+    lastIndex = index;
+    return prophecies[index];
+  }
+
+  function dispenseTicket() {
+    pullBtn.classList.add('pressed');
+    setTimeout(() => pullBtn.classList.remove('pressed'), 160);
+
+    ticket.classList.remove('visible');
+
+    setTimeout(() => {
+      ticketText.textContent = pickProphecy();
+      ticketNumber.textContent = 'No. ' + String(Math.floor(Math.random() * 9999)).padStart(4, '0');
+      ticket.classList.add('visible');
+    }, 180);
+  }
+
+  pullBtn.addEventListener('click', dispenseTicket);
+
+  themeToggle.addEventListener('click', () => {
+    const root = document.documentElement;
+    const current = root.getAttribute('data-theme');
+    if (current === 'dark') {
+      root.setAttribute('data-theme', 'light');
+    } else if (current === 'light') {
+      root.removeAttribute('data-theme');
+    } else {
+      root.setAttribute('data-theme', 'dark');
+    }
+  });
+</script>
+
+</body>
+</html>
