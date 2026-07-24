@@ -283,6 +283,19 @@
     margin: 0 0 0.7rem;
   }
 
+  .ticket-author {
+    font-family: "Courier New", ui-monospace, SFMono-Regular, monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    color: var(--ticket-ink-soft);
+    text-align: right;
+    margin: 0 0 0.9rem;
+  }
+
+  .ticket-author::before {
+    content: "\2014 ";
+  }
+
   .ticket-foot {
     font-family: "Courier New", ui-monospace, SFMono-Regular, monospace;
     font-size: 0.65rem;
@@ -320,7 +333,7 @@
 
 <main class="stage">
   <h1 class="marquee">Madame Oracle</h1>
-  <p class="tagline">Automatic Fortune Machine &mdash; One Pull, One Truth</p>
+  <p class="tagline">Automatic Fortune Machine &mdash; Real Wisdom From History</p>
 
   <div class="bulbs" aria-hidden="true">
     <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
@@ -340,7 +353,8 @@
       <div class="ticket" id="ticket" role="status" aria-live="polite">
         <div class="ticket-number" id="ticketNumber">No. 0000</div>
         <p class="ticket-text" id="ticketText"></p>
-        <div class="ticket-foot">Printed by the Ether</div>
+        <p class="ticket-author" id="ticketAuthor"></p>
+        <div class="ticket-foot">Drawn From the Archive</div>
       </div>
     </div>
   </div>
@@ -349,54 +363,53 @@
 </main>
 
 <script>
-  const prophecies = [
-    "The path you fear to walk is the one that leads you home.",
-    "A door you have long overlooked is about to open.",
-    "What you seek is already seeking you.",
-    "Your patience, though tested, will be rewarded within the turning of a season.",
-    "Today's small step is tomorrow's great leap.",
-    "You carry more strength than the mirror shows you.",
-    "A stranger's words will soon become a turning point.",
-    "The storm you are in is shaping the calm you deserve.",
-    "Trust the timing of your life; nothing arrives too early or too late.",
-    "An old wound is closing, though you have not noticed the healing.",
-    "Fortune is rearranging itself in your favor.",
-    "Say yes to the thing that frightens you a little and excites you a lot.",
-    "Your intuition is not loud, but it is right. Listen closer.",
-    "Someone is thinking of reaching out to you. Answer when they do.",
-    "The chapter closing now was never meant to be the whole story.",
-    "Abundance flows toward those who first believe they are worthy of it.",
-    "A decision made in stillness will serve you better than one made in haste.",
-    "You are exactly where you need to be to become who you are meant to be.",
-    "The seeds you planted in silence will bloom in public.",
-    "Let go of the rope you've been pulling alone; help is closer than you think.",
-    "Your next chapter begins the moment you stop rereading the last one.",
-    "A risk taken with an open heart cannot truly fail.",
-    "The clarity you've prayed for arrives after one more leap of faith.",
-    "What feels like an ending is only room being cleared for something greater.",
-    "Your kindness today plants a fortune you'll harvest tomorrow.",
-    "The answer you need is inside a question you haven't asked yet.",
-    "Fortune favors the one who moves before seeing the whole staircase.",
-    "You are not behind. You are exactly on time.",
-    "A quiet victory is coming, one that only you will fully understand.",
-    "The version of you that you're becoming is already proud of you."
+  const quotes = [
+    { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+    { text: "It always seems impossible until it's done.", author: "Nelson Mandela" },
+    { text: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt" },
+    { text: "In the middle of every difficulty lies opportunity.", author: "Albert Einstein" },
+    { text: "Whether you think you can, or you think you can't, you're right.", author: "Henry Ford" },
+    { text: "The best way to predict the future is to invent it.", author: "Alan Kay" },
+    { text: "What lies behind us and what lies before us are tiny matters compared to what lies within us.", author: "Ralph Waldo Emerson" },
+    { text: "You must be the change you wish to see in the world.", author: "Mahatma Gandhi" },
+    { text: "I have not failed. I've just found 10,000 ways that won't work.", author: "Thomas Edison" },
+    { text: "The only limit to our realization of tomorrow will be our doubts of today.", author: "Franklin D. Roosevelt" },
+    { text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
+    { text: "The journey of a thousand miles begins with a single step.", author: "Lao Tzu" },
+    { text: "Turn your wounds into wisdom.", author: "Oprah Winfrey" },
+    { text: "I alone cannot change the world, but I can cast a stone across the water to create many ripples.", author: "Mother Teresa" },
+    { text: "Nothing is impossible, the word itself says 'I'm possible.'", author: "Audrey Hepburn" },
+    { text: "The way to get started is to quit talking and begin doing.", author: "Walt Disney" },
+    { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
+    { text: "Twenty years from now you will be more disappointed by the things that you didn't do than by the ones you did do.", author: "Mark Twain" },
+    { text: "It does not matter how slowly you go as long as you do not stop.", author: "Confucius" },
+    { text: "Keep your face always toward the sunshine, and shadows will fall behind you.", author: "Walt Whitman" },
+    { text: "We know what we are, but know not what we may be.", author: "William Shakespeare" },
+    { text: "The best time to plant a tree was 20 years ago. The second best time is now.", author: "Chinese Proverb" },
+    { text: "Fortune favors the bold.", author: "Virgil" },
+    { text: "He who has a why to live can bear almost any how.", author: "Friedrich Nietzsche" },
+    { text: "The unexamined life is not worth living.", author: "Socrates" },
+    { text: "Nothing in life is to be feared, it is only to be understood.", author: "Marie Curie" },
+    { text: "You may not control all the events that happen to you, but you can decide not to be reduced by them.", author: "Maya Angelou" },
+    { text: "Although the world is full of suffering, it is also full of the overcoming of it.", author: "Helen Keller" }
   ];
 
   const pullBtn = document.getElementById('pullBtn');
   const ticket = document.getElementById('ticket');
   const ticketText = document.getElementById('ticketText');
+  const ticketAuthor = document.getElementById('ticketAuthor');
   const ticketNumber = document.getElementById('ticketNumber');
   const themeToggle = document.getElementById('themeToggle');
 
   let lastIndex = -1;
 
-  function pickProphecy() {
+  function pickQuote() {
     let index;
     do {
-      index = Math.floor(Math.random() * prophecies.length);
-    } while (index === lastIndex && prophecies.length > 1);
+      index = Math.floor(Math.random() * quotes.length);
+    } while (index === lastIndex && quotes.length > 1);
     lastIndex = index;
-    return prophecies[index];
+    return quotes[index];
   }
 
   function dispenseTicket() {
@@ -406,7 +419,9 @@
     ticket.classList.remove('visible');
 
     setTimeout(() => {
-      ticketText.textContent = pickProphecy();
+      const quote = pickQuote();
+      ticketText.textContent = '“' + quote.text + '”';
+      ticketAuthor.textContent = quote.author;
       ticketNumber.textContent = 'No. ' + String(Math.floor(Math.random() * 9999)).padStart(4, '0');
       ticket.classList.add('visible');
     }, 180);
